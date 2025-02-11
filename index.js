@@ -66,7 +66,7 @@ app.get("/", (req, res) => {
     const studentId = req.params.id;
   
     try {
-      const deletedStudent = await Student.findByIdAndRemove(studentId);
+      const deletedStudent = await Student.findByIdAndDelete(studentId);
   
       if (!deletedStudent) {
         return res.status(404).json({ error: "Student not found" });

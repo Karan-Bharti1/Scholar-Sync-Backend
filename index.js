@@ -103,6 +103,26 @@ app.get("/", (req, res) => {
       res.status(500).json({error:"Failed to post teachers data"})
     }
   })
+  const readAllTeachersData=async()=>{
+    try {
+      const data=await Teachers.find()
+      return data
+    } catch (error) {
+      throw error
+    }
+  }
+  app.get("/teachers",async(req,res)=>{
+    try {
+      const data=await readAllTeachersData()
+      if(data && data.length>0){
+res.status(200).json(data)
+      }else{
+        res.status(404).json({error:"Data not found"})
+      }
+    } catch (error) {
+      res.status(500).json({error:"Failed to get teachers data"})
+    }
+  })
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });

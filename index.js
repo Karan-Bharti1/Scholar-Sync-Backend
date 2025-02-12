@@ -143,6 +143,26 @@ res.status(200).json(data)
       res.status(500).json({error:"Failed to delete teachers data"})
     }
   })
+  const updateTeacherData=async (teacherId,dataToBeUpdated) => {
+    try {
+      const updatedData=await Teachers.findByIdAndUpdate(teacherId,dataToBeUpdated,{new:true})
+      return updatedData
+    } catch (error) {
+      throw error
+    }
+  }
+  app.post("/teachers/:id",async(req,res)=>{
+    try {
+      const updatedData=await updateTeacherData(req.params.id,req.body)
+      if(updatedData){
+res.status(200).json({message:"Data updated successfully",updatedData:updatedData})
+      }else{
+        res.status(404).json({error:"Data not found"})
+      }
+    } catch (error) {
+      res.status(500).json({error:"Failed to update teachers data"})
+    }
+  })
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });

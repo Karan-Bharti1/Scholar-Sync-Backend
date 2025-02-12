@@ -123,6 +123,26 @@ res.status(200).json(data)
       res.status(500).json({error:"Failed to get teachers data"})
     }
   })
+  const deleteTeachersdata=async (teachersId) => {
+    try {
+      const deletedData=await Teachers.findByIdAndDelete(teachersId)
+      return deletedData
+    } catch (error) {
+      throw error
+    }
+  }
+  app.delete("/teachers/:id",async(req,res)=>{
+    try {
+      const deletedData=await deleteTeachersdata(req.params.id)
+      if(deletedData){
+        res.status(200).json({message:"Data deleted successfully",teacher:deletedData})
+      }else{
+        res.status(404).json({error:"Data not found"})
+      }
+    } catch (error) {
+      res.status(500).json({error:"Failed to delete teachers data"})
+    }
+  })
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });

@@ -2,6 +2,7 @@ const mongoose=require('mongoose')
 const teacherSchema=new mongoose.Schema({
     teacherName:String,
     phoneNumber:String,
+    gender:String,
     emailId:String,
     qualification:String,
     resultPercentage:Number

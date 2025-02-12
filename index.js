@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const { initializerDb } = require("./Database/db.connect");
 const { Student } = require("./models/students.model");
+const Teachers = require("./models/teacher.models");
 
 const app = express();
 const PORT = 3000;
@@ -83,8 +84,25 @@ app.get("/", (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
   });
-  
-  
+  const addNewData=async (dataToBePosted) => {
+    try {
+      const teacher=new Teachers(dataToBePosted)
+      const saveData=await teacher.save()
+      return saveData
+    } catch (error) {
+      throw error
+    }
+  }
+  app.post("/teachers",async(req,res)=>{
+    try {
+      const teacherData=await addNewData(req.body)
+      if(teacherData){
+        res.status(200).json(teacherData)
+      }
+    } catch (error) {
+      res.status(500).json({error:"Failed to post teachers data"})
+    }
+  })
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });

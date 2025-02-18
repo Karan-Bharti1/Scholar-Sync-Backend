@@ -151,7 +151,7 @@ res.status(200).json(data)
       throw error
     }
   }
-  app.post("/teachers/:id",async(req,res)=>{
+  app.put("/teachers/:id",async(req,res)=>{
     try {
       const updatedData=await updateTeacherData(req.params.id,req.body)
       if(updatedData){
